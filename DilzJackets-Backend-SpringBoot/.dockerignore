@@ -1,0 +1,25 @@
+# Git & Editor files
+.git
+.gitignore
+.idea
+*.iml
+.vscode
+
+# Secrets & Environment variables (Keep out of public Docker image)
+.env
+*.env
+application-local.properties
+application-local.yml
+application-secret.properties
+application-secret.yml
+
+# Build outputs & caches
+target/
+.mvn/wrapper/maven-wrapper.jar
+
+# Logs & temp files
+*.log
+logs/
+*.tmp
+*.docx
+HELP.md

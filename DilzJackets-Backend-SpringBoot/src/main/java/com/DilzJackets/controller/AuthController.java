@@ -3,7 +3,8 @@ package com.DilzJackets.controller;
 import com.DilzJackets.model.AdminUser;
 import com.DilzJackets.repository.AdminUserRepository;
 import com.DilzJackets.security.JwtUtil;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -46,9 +47,18 @@ public class AuthController {
                 "username", user.getUsername()));
     }
 
-    @Data
+    @Getter
+    @Setter
     public static class LoginRequest {
         private String username;
         private String password;
+
+        public LoginRequest() {
+        }
+
+        public LoginRequest(String username, String password) {
+            this.username = username;
+            this.password = password;
+        }
     }
 }

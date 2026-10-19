@@ -1,11 +1,15 @@
 package com.DilzJackets.model;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "admin_users")
-@Data
+@Getter
+@Setter
+@ToString
 public class AdminUser {
 
     @Id
@@ -17,4 +21,13 @@ public class AdminUser {
 
     @Column(name = "password_hash", nullable = false)
     private String passwordHash;
+
+    public AdminUser() {
+    }
+
+    public AdminUser(Long id, String username, String passwordHash) {
+        this.id = id;
+        this.username = username;
+        this.passwordHash = passwordHash;
+    }
 }

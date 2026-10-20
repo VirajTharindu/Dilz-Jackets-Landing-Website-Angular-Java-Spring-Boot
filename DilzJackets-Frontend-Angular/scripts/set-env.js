@@ -33,7 +33,14 @@ if (envPath) {
     }
   }
 } else {
-  console.warn('[set-env] Warning: No .env found. Using fallback environment defaults.');
+  console.log('[set-env] Note: No .env found. Checking system environment variables...');
+}
+
+// Allow platform environment variables (Vercel, Netlify, Render, Docker) to override defaults
+for (const key of Object.keys(envVars)) {
+  if (process.env[key]) {
+    envVars[key] = process.env[key];
+  }
 }
 
 const environmentsDir = path.resolve(__dirname, '../src/environments');

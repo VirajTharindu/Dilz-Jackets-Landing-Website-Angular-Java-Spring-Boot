@@ -5,10 +5,10 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 
 @Component({
-    selector: 'app-login',
-    standalone: true,
-    imports: [CommonModule, ReactiveFormsModule, RouterLink],
-    template: `
+  selector: 'app-login',
+  standalone: true,
+  imports: [CommonModule, ReactiveFormsModule, RouterLink],
+  template: `
     <div class="min-h-screen bg-jackets-matte flex items-center justify-center p-4 relative">
       <!-- Ambient Glow -->
       <div class="absolute w-[400px] h-[400px] bg-jackets-neon/10 rounded-full blur-[140px] pointer-events-none"></div>
@@ -58,7 +58,7 @@ import { AuthService } from '../core/services/auth.service';
 
         <div class="mt-6 text-center border-t border-jackets-carbon pt-4">
           <a routerLink="/" class="text-xs text-gray-400 hover:text-jackets-neon transition inline-flex items-center gap-1.5 font-bold">
-            ← Return to Homepage
+            ← Return to Homepage 🔐
           </a>
         </div>
       </div>
@@ -67,44 +67,44 @@ import { AuthService } from '../core/services/auth.service';
 })
 
 export class LoginComponent implements OnInit {
-    private fb = inject(FormBuilder);
-    private authService = inject(AuthService);
-    private router = inject(Router);
+  private fb = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
-    isLoading = signal(false);
-    errorMessage = signal<string | null>(null);
+  isLoading = signal(false);
+  errorMessage = signal<string | null>(null);
 
-    loginForm = this.fb.group({
-        username: ['', Validators.required],
-        password: ['', Validators.required]
+  loginForm = this.fb.group({
+    username: ['', Validators.required],
+    password: ['', Validators.required]
+  });
+
+  ngOnInit() {
+    if (this.authService.isAuthenticated()) {
+      this.router.navigate(['/dashboard']);
+    }
+  }
+
+  onSubmit() {
+    if (this.loginForm.invalid)
+      return;
+
+    this.isLoading.set(true);
+    this.errorMessage.set(null);
+
+    const { username, password } = this.loginForm.value;
+
+    this.authService.login({ username: username!, password: password! }).subscribe({
+      next: () => {
+        this.isLoading.set(false);
+        this.router.navigate(['/dashboard']); //instantly route to dashboard on sucess
+
+      },
+      error: () => {
+        this.isLoading.set(false);
+        this.errorMessage.set('Invalid Credentials');
+      }
     });
 
-    ngOnInit() {
-        if (this.authService.isAuthenticated()) {
-            this.router.navigate(['/dashboard']);
-        }
-    }
-
-    onSubmit() {
-        if (this.loginForm.invalid)
-            return;
-
-        this.isLoading.set(true);
-        this.errorMessage.set(null);
-
-        const { username, password } = this.loginForm.value;
-
-        this.authService.login({ username: username!, password: password! }).subscribe({
-            next: () => {
-                this.isLoading.set(false);
-                this.router.navigate(['/dashboard']); //instantly route to dashboard on sucess
-
-            },
-            error: () => {
-                this.isLoading.set(false);
-                this.errorMessage.set('Invalid Credentials');
-            }
-        });
-
-    }
+  }
 }

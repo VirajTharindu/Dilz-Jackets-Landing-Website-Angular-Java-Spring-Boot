@@ -58,7 +58,7 @@ import { AuthService } from '../core/services/auth.service';
 
         <div class="mt-6 text-center border-t border-jackets-carbon pt-4">
           <a routerLink="/" class="text-xs text-gray-400 hover:text-jackets-neon transition inline-flex items-center gap-1.5 font-bold">
-            ← Return to Homepage 🔐
+            ← Return to Homepage 🔐 (For Admin Only)
           </a>
         </div>
       </div>
